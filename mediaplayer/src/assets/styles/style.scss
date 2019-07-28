@@ -1,0 +1,52 @@
+#controller{
+    background-color: #772020;
+    display: flex;
+    height: 70px;
+    justify-content: space-around;
+    width: auto;
+  
+
+    #controller_center{
+        display: flex;
+        justify-content: space-around;
+        width: 30%;
+        #playerButton{
+            width: 55px;
+            img{
+                height: 100%;
+                width: 100%;
+                filter: invert(1);
+            }
+        }
+    }
+
+    #controller_right{
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        #volumnButton{
+            width: 20px;
+            margin: 1px 10px 0 0;
+            img{
+                width: 100%;
+            }
+        }
+        #volumnBar{
+            background-color: #FFFFFF;
+            border-radius: 30px;
+            height: 5px;
+            width: 100px;
+        }
+    }
+}
+
+#musicRangeBox{
+    background-color: #FFFFFF;
+    height: 20px;
+    width: auto;
+    &_range{
+        background-color: #E5B4B7;
+        height: 20px;
+        width: 0px;
+    }
+}
