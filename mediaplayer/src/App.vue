@@ -46,6 +46,7 @@ body {
   #informationPanel {
     display: flex;
     height: calc(100vh - 120px);
+    overflow: hidden;
     #imageSize {
       align-self: center;
       width: 40%;
