@@ -56,12 +56,16 @@
                 )
 
             #controller_right
-                #volumnButton
+                #volumeButton
                     img(
                     src="@/assets/images/volumeUpButton.svg",
+                    @click="changeVoiceStatus",
+                    :style="isMute?'filter: invert(1);':''"
                     )    
-                #volumnBar
-                    span(id="volumnBar-active")
+                #volumeBar(@click="changeVolume")
+                    div(
+                      id="volumeBar-active"
+                    )
 
         #panel
 </template>
@@ -71,10 +75,22 @@ export default {
   data() {
     return {
       origSonglist: [
-        "/musics/untilTheDay.mp3",
-        "/musics/heUnderstood.mp3",
-        "/musics/guessIt.mp3",
-        "/musics/When You Tell Me That You Love Me.mp3"
+        {
+          artist:"林俊傑",
+          songName:"/musics/untilTheDay.mp3",
+        },
+        {
+          artist:"張杰",
+          songName:"/musics/heUnderstood.mp3",
+        },
+        {
+          artist:"曾之喬",
+          songName:"/musics/guessIt.mp3",
+        },
+        {
+          artist:"Westlif",
+          songName:"/musics/When You Tell Me That You Love Me.mp3",
+        }
       ],
       shufflecurrentSonglist: [],
       isPaused: true,
@@ -82,25 +98,27 @@ export default {
       isChangeSong: false,
       isLoop: true,
       isResize: false,
+      isMute: false,
       audioPlayer: "",
       currentTime: 0,
       duration: 0,
       screenWidth: 0,
       songIndex: 0,
       songTimer: "",
-      songSrc: ""
+      songSrc: "",
+      voiceVolume:0,
     };
   },
   mounted() {
     let vm = this;
     this.audioPlayer = document.getElementById("audioPlayer");
+    this.voiceVolume = this.audioPlayer.volume
     window.onresize = () => {
       this.isResize = true;
       return (() => {
         this.screenWidth = document.body.clientWidth;
       })();
     };
-    // this.totalWidth = document.body.clientWidth
   },
   watch: {
     currentSong() {
@@ -110,7 +128,7 @@ export default {
     },
     currentTime() {
       this.duration = this.audioPlayer.duration;
-    //   this.audioPlayer.currentTime = this.currentTime;
+      //   this.audioPlayer.currentTime = this.currentTime;
       let width =
         this.currentTime > 0
           ? `${this.currentTime * (this.totalWidth / this.duration)}px `
@@ -118,7 +136,6 @@ export default {
       document.getElementById("musicRangeBox_range").style.width = width;
 
       if (this.audioPlayer.ended) {
-        console.log("start");
         clearInterval(this.songTimer);
         if (!this.isLoop) {
           this.toNexSong();
@@ -126,12 +143,20 @@ export default {
       }
     },
     isShuffle() {
-      this.songSrc = this.currentSonglist[this.songIndex];
+      this.songSrc = this.currentSonglist[this.songIndex].songName;
       this.audioPlayer.src = this.songSrc;
       this.audioPlayer.currentTime = 0;
       this.currentTime = 0;
       this.audioPlayer.play();
       this.isPaused = this.audioPlayer.paused;
+      console.log(this.songSrc)
+    },
+    voiceVolume() {
+      console.log("volume");
+      console.log(this.voiceVolume);
+      let width = this.voiceVolume > 0 ? `${this.voiceVolume * 100}px` : 0;
+      console.log(width)
+      document.getElementById("volumeBar-active").style.width = width;
     }
   },
   computed: {
@@ -149,14 +174,14 @@ export default {
     },
     currentSong() {
       if (this.isChangeSong) {
-        let song = this.currentSonglist[this.songIndex];
+        let song = this.currentSonglist[this.songIndex].songName;
         this.audioPlayer.src = song;
         this.audioPlayer.currentTime = 0;
         this.currentTime = 0;
         this.audioPlayer.play();
         this.isPaused = this.audioPlayer.paused;
       } else {
-        this.songSrc = this.currentSonglist[this.songIndex];
+        this.songSrc = this.currentSonglist[this.songIndex].songName;
       }
       return this.songSrc;
     },
@@ -254,7 +279,18 @@ export default {
     changePlayingTime(e) {
       this.currentTime = this.duration * (e.offsetX / this.totalWidth);
       this.audioPlayer.currentTime = this.currentTime;
-      console.log(this.currentTime);
+    },
+    changeVolume(e) {
+      this.voiceVolume = 1 * (e.offsetX / 100);
+      this.audioPlayer.volume = this.voiceVolume;
+    },
+    changeVoiceStatus() {
+      this.isMute = !this.isMute;
+      if (this.isMute) {
+        this.audioPlayer.volume = 0;
+      } else {
+        this.audioPlayer.volume = this.voiceVolume;
+      }
     },
     load() {
       console.log("load");
