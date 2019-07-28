@@ -170,13 +170,13 @@ export default {
       this.currentTime = 0;
       this.audioPlayer.play();
       this.isPaused = this.audioPlayer.paused;
-      console.log(this.songSrc);
+      // console.log(this.songSrc);
     },
     voiceVolume() {
-      console.log("volume");
-      console.log(this.voiceVolume);
+      // console.log("volume");
+      // console.log(this.voiceVolume);
       let width = this.voiceVolume > 0 ? `${this.voiceVolume * 100}px` : 0;
-      console.log(width);
+      // console.log(width);
       document.getElementById("volumeBar-active").style.width = width;
     }
   },
@@ -184,7 +184,7 @@ export default {
     currentSonglist() {
       let songlist;
       if (this.isShuffle) {
-        console.log("shuffle");
+        // console.log("shuffle");
         songlist = this.shufflecurrentSonglist;
         this.songIndex = 0;
       } else {
@@ -213,7 +213,7 @@ export default {
       return this.currentSonglist[this.songIndex].artist;
     },
     songImgSrc() {
-      this.$emit("changImage", this.currentSonglist[this.songIndex].songImgSrc);
+      this.$emit('changImage',this.currentSonglist[this.songIndex].songImgSrc)
       return this.currentSonglist[this.songIndex].songImgSrc;
     },
     totalWidth() {
@@ -234,9 +234,7 @@ export default {
       return `${minute} : ${second}`;
     },
     totalTimer() {
-      if (isNaN(this.duration)) {
-        return `00 : 00`;
-      }
+      if(isNaN(this.duration)){return `00 : 00`}
       let minute = Math.floor(this.duration / 60);
       let second = Math.floor(this.duration - minute * 60);
 
@@ -341,6 +339,12 @@ export default {
       } else {
         this.audioPlayer.volume = this.voiceVolume;
       }
+    },
+    load() {
+      // console.log("load");
+    },
+    error() {
+      // console.log("error");
     }
   }
 };
