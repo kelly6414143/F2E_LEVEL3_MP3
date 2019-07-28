@@ -105,3 +105,46 @@
         width: 0px;
     }
 }
+
+
+#audioList{
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+
+    #audioList_table{
+        border-spacing: 0px;
+        text-align: center;
+        width: 100%;
+        #listTitle{
+            color:#964A4D;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        th,td{
+            border-bottom: .2px solid #707070;
+        }
+
+        th{
+            padding: 4px 0;
+        }
+
+        td{
+            padding: 20px 0;
+        }
+
+        & td:first-child{
+            padding-left: 10px;
+        }
+        & td:nth-child(2){
+            width: 10%;
+        }
+        & td:nth-child(3){
+            text-align: left;
+        }
+        & td:nth-child(5){
+            padding-right: 30px;
+        }
+    }
+}

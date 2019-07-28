@@ -87,32 +87,7 @@
 export default {
   data() {
     return {
-      origSonglist: [
-        {
-          artist: "林俊傑",
-          songName: "Until The Day",
-          songSrc: require("@/assets/musics/untilTheDay.mp3"),
-          songImgSrc: require("@/assets/images/JJLin.jpg")
-        },
-        {
-          artist: "張杰",
-          songName: "他不懂",
-          songSrc: require("@/assets/musics/heUnderstood.mp3"),
-          songImgSrc: require("@/assets/images/JasonChang.jpg")
-        },
-        {
-          artist: "曾之喬",
-          songName: "猜猜看",
-          songSrc: require("@/assets/musics/guessIt.mp3"),
-          songImgSrc: require("@/assets/images/JoanneTseng.jpg")
-        },
-        {
-          artist: "Westlife .feat DianaRoss",
-          songName: "When You Tell Me That You Love Me",
-          songSrc: require("@/assets/musics/When You Tell Me That You Love Me.mp3"),
-          songImgSrc: require("@/assets/images/Westlife .feat DianaRoss.jpg")
-        }
-      ],
+      origSonglist: [],
       shufflecurrentSonglist: [],
       isPaused: true,
       isShuffle: false,
@@ -182,6 +157,8 @@ export default {
   },
   computed: {
     currentSonglist() {
+      this.origSonglist = this.$store.state.songList
+      // console.log('currentSongList')
       let songlist;
       if (this.isShuffle) {
         // console.log("shuffle");
@@ -190,7 +167,7 @@ export default {
       } else {
         songlist = this.origSonglist;
       }
-      //   console.log('computed',songlist);
+
       return songlist;
     },
     currentSong() {
@@ -204,6 +181,7 @@ export default {
       } else {
         this.songSrc = this.currentSonglist[this.songIndex].songSrc;
       }
+      this.$store.commit('getCurrentSong',this.currentSonglist[this.songIndex])
       return this.songSrc;
     },
     songName() {
@@ -350,6 +328,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@/assets/styles/style.scss" scoped></style>
+<style lang="scss" src="@/assets/styles/style.scss"></style>
 <style scoped>
 </style>

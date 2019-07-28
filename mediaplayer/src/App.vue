@@ -3,16 +3,20 @@
     #informationPanel
       #imageSize
         img(:src="mainImageSrc")
+      audio-list(id="audioList")
+
     audio-controller(@changImage="changImage")
 </template>
 
 <script>
 import audioController from "./components/audiioController";
+import audioList from "./components/audioList";
 
 export default {
   name: "app",
   components: {
-    "audio-controller": audioController
+    "audio-controller": audioController,
+    "audio-list": audioList
   },
   data() {
     return {
@@ -37,17 +41,21 @@ body {
 }
 
 #app {
+  height: 100vh;
+  overflow: hidden;
   #informationPanel {
-    align-items: center;
     display: flex;
     height: calc(100vh - 120px);
     #imageSize {
-      width: 500px;
-      margin: 0 auto;
+      align-self: center;
+      width: 40%;
       img {
         width: 100%;
         vertical-align: bottom;
       }
+    }
+    #audioList {
+      width: 60%;
     }
   }
 }
