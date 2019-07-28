@@ -33,37 +33,37 @@
 
             #controller_center
                 img(
-                src="/images/shuffleButton.svg",
+                src="@/assets/images/shuffleButton.svg",
                 @click="toShuffleSonglist"
                 :style="isShuffle?'filter: invert(1);':''"
                 )
 
                 img(
                 id="preSongButton",
-                src="/images/preButton.svg",
+                src="@/assets/images/preButton.svg",
                 @click="toPreSong"
                 )
 
                 #playerButton
                     img(
                         v-if="isPaused",
-                        src="/images/playButton.svg",
+                        src="@/assets/images/playButton.svg",
                         @click="toPlaying"
                         )
                     img(
-                        v-if="!isPaused",
-                        src="/images/pauseButton.svg",
+                        v-else,
+                        src="@/assets/images/pauseButton.svg",
                         @click="toPlaying"
                         )
                 
                 img(
                 id="nextSongButton",
-                src="/images/nextButton.svg",
+                src="@/assets/images/nextButton.svg",
                 @click="toNexSong"
                 )
 
                 img(
-                src="/images/repeatButton.svg",
+                src="@/assets/images/repeatButton.svg",
                 @click="toRepeatSong",
                 :style="isLoop?'filter: invert(1);':''"
                 )
@@ -71,7 +71,7 @@
             #controller_right
                 #volumeButton
                     img(
-                    src="/images/volumeUpButton.svg",
+                    src="@/assets/images/volumeUpButton.svg",
                     @click="changeVoiceStatus",
                     :style="isMute?'filter: invert(1);':''"
                     )    
@@ -91,26 +91,26 @@ export default {
         {
           artist: "林俊傑",
           songName: "Until The Day",
-          songSrc: "/musics/untilTheDay.mp3",
-          songImgSrc: "/images/JJLin.jpg"
+          songSrc: require("@/assets/musics/untilTheDay.mp3"),
+          songImgSrc: require("@/assets/images/JJLin.jpg")
         },
         {
           artist: "張杰",
           songName: "他不懂",
-          songSrc: "/musics/heUnderstood.mp3",
-          songImgSrc: "/images/JasonChang.jpg"
+          songSrc: require("@/assets/musics/heUnderstood.mp3"),
+          songImgSrc: require("@/assets/images/JasonChang.jpg")
         },
         {
           artist: "曾之喬",
           songName: "猜猜看",
-          songSrc: "/musics/guessIt.mp3",
-          songImgSrc: "/images/JoanneTseng.jpg"
+          songSrc: require("@/assets/musics/guessIt.mp3"),
+          songImgSrc: require("@/assets/images/JoanneTseng.jpg")
         },
         {
           artist: "Westlife .feat DianaRoss",
           songName: "When You Tell Me That You Love Me",
-          songSrc: "/musics/When You Tell Me That You Love Me.mp3",
-          songImgSrc: "/images/Westlife .feat DianaRoss.jpg"
+          songSrc: require("@/assets/musics/When You Tell Me That You Love Me.mp3"),
+          songImgSrc: require("@/assets/images/Westlife .feat DianaRoss.jpg")
         }
       ],
       shufflecurrentSonglist: [],
@@ -213,6 +213,7 @@ export default {
       return this.currentSonglist[this.songIndex].artist;
     },
     songImgSrc() {
+      this.$emit("changImage", this.currentSonglist[this.songIndex].songImgSrc);
       return this.currentSonglist[this.songIndex].songImgSrc;
     },
     totalWidth() {
@@ -233,7 +234,9 @@ export default {
       return `${minute} : ${second}`;
     },
     totalTimer() {
-      if(isNaN(this.duration)){return `00 : 00`}
+      if (isNaN(this.duration)) {
+        return `00 : 00`;
+      }
       let minute = Math.floor(this.duration / 60);
       let second = Math.floor(this.duration - minute * 60);
 
@@ -338,17 +341,11 @@ export default {
       } else {
         this.audioPlayer.volume = this.voiceVolume;
       }
-    },
-    load() {
-      console.log("load");
-    },
-    error() {
-      console.log("error");
     }
   }
 };
 </script>
 
-<style lang="scss" src="@/assets/styles/style.scss"></style>
+<style lang="scss" src="@/assets/styles/style.scss" scoped></style>
 <style scoped>
 </style>
