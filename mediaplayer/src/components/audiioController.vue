@@ -18,39 +18,52 @@
             )
 
         #controller
+
+          #controller_upLayer
+            div {{currentTimer}}
+            div {{totalTimer}}
+
+          #controller_downLayer
+            #controller_left
+              #songImg
+                img(:src="songImgSrc")
+              #artistDate
+                #artistDate_songName {{songName}}
+                #artistDate_artist {{artist}}
+
             #controller_center
                 img(
-                src="@/assets/images/shuffleButton.svg",
+                src="/images/shuffleButton.svg",
                 @click="toShuffleSonglist"
                 :style="isShuffle?'filter: invert(1);':''"
                 )
 
                 img(
                 id="preSongButton",
-                src="@/assets/images/preButton.svg",
+                src="/images/preButton.svg",
                 @click="toPreSong"
                 )
 
                 #playerButton
                     img(
                         v-if="isPaused",
-                        src="@/assets/images/playButton.svg",
+                        src="/images/playButton.svg",
                         @click="toPlaying"
                         )
                     img(
                         v-if="!isPaused",
-                        src="@/assets/images/pauseButton.svg",
+                        src="/images/pauseButton.svg",
                         @click="toPlaying"
                         )
                 
                 img(
                 id="nextSongButton",
-                src="@/assets/images/nextButton.svg",
+                src="/images/nextButton.svg",
                 @click="toNexSong"
                 )
 
                 img(
-                src="@/assets/images/repeatButton.svg",
+                src="/images/repeatButton.svg",
                 @click="toRepeatSong",
                 :style="isLoop?'filter: invert(1);':''"
                 )
@@ -58,7 +71,7 @@
             #controller_right
                 #volumeButton
                     img(
-                    src="@/assets/images/volumeUpButton.svg",
+                    src="/images/volumeUpButton.svg",
                     @click="changeVoiceStatus",
                     :style="isMute?'filter: invert(1);':''"
                     )    
@@ -76,20 +89,28 @@ export default {
     return {
       origSonglist: [
         {
-          artist:"林俊傑",
-          songName:"/musics/untilTheDay.mp3",
+          artist: "林俊傑",
+          songName: "Until The Day",
+          songSrc: "/musics/untilTheDay.mp3",
+          songImgSrc: "/images/JJLin.jpg"
         },
         {
-          artist:"張杰",
-          songName:"/musics/heUnderstood.mp3",
+          artist: "張杰",
+          songName: "他不懂",
+          songSrc: "/musics/heUnderstood.mp3",
+          songImgSrc: "/images/JasonChang.jpg"
         },
         {
-          artist:"曾之喬",
-          songName:"/musics/guessIt.mp3",
+          artist: "曾之喬",
+          songName: "猜猜看",
+          songSrc: "/musics/guessIt.mp3",
+          songImgSrc: "/images/JoanneTseng.jpg"
         },
         {
-          artist:"Westlif",
-          songName:"/musics/When You Tell Me That You Love Me.mp3",
+          artist: "Westlife .feat DianaRoss",
+          songName: "When You Tell Me That You Love Me",
+          songSrc: "/musics/When You Tell Me That You Love Me.mp3",
+          songImgSrc: "/images/Westlife .feat DianaRoss.jpg"
         }
       ],
       shufflecurrentSonglist: [],
@@ -106,13 +127,13 @@ export default {
       songIndex: 0,
       songTimer: "",
       songSrc: "",
-      voiceVolume:0,
+      voiceVolume: 0
     };
   },
   mounted() {
     let vm = this;
     this.audioPlayer = document.getElementById("audioPlayer");
-    this.voiceVolume = this.audioPlayer.volume
+    this.voiceVolume = this.audioPlayer.volume;
     window.onresize = () => {
       this.isResize = true;
       return (() => {
@@ -143,19 +164,19 @@ export default {
       }
     },
     isShuffle() {
-      this.songSrc = this.currentSonglist[this.songIndex].songName;
+      this.songSrc = this.currentSonglist[this.songIndex].songSrc;
       this.audioPlayer.src = this.songSrc;
       this.audioPlayer.currentTime = 0;
       this.currentTime = 0;
       this.audioPlayer.play();
       this.isPaused = this.audioPlayer.paused;
-      console.log(this.songSrc)
+      console.log(this.songSrc);
     },
     voiceVolume() {
       console.log("volume");
       console.log(this.voiceVolume);
       let width = this.voiceVolume > 0 ? `${this.voiceVolume * 100}px` : 0;
-      console.log(width)
+      console.log(width);
       document.getElementById("volumeBar-active").style.width = width;
     }
   },
@@ -174,16 +195,25 @@ export default {
     },
     currentSong() {
       if (this.isChangeSong) {
-        let song = this.currentSonglist[this.songIndex].songName;
+        let song = this.currentSonglist[this.songIndex].songSrc;
         this.audioPlayer.src = song;
         this.audioPlayer.currentTime = 0;
         this.currentTime = 0;
         this.audioPlayer.play();
         this.isPaused = this.audioPlayer.paused;
       } else {
-        this.songSrc = this.currentSonglist[this.songIndex].songName;
+        this.songSrc = this.currentSonglist[this.songIndex].songSrc;
       }
       return this.songSrc;
+    },
+    songName() {
+      return this.currentSonglist[this.songIndex].songName;
+    },
+    artist() {
+      return this.currentSonglist[this.songIndex].artist;
+    },
+    songImgSrc() {
+      return this.currentSonglist[this.songIndex].songImgSrc;
     },
     totalWidth() {
       let width;
@@ -193,6 +223,23 @@ export default {
         width = document.body.clientWidth;
       }
       return width;
+    },
+    currentTimer() {
+      let minute = Math.floor(this.currentTime / 60);
+      let second = Math.floor(this.currentTime - minute * 60);
+
+      minute = minute < 10 ? `0${minute}` : minute;
+      second = second < 10 ? `0${second}` : second;
+      return `${minute} : ${second}`;
+    },
+    totalTimer() {
+      if(isNaN(this.duration)){return `00 : 00`}
+      let minute = Math.floor(this.duration / 60);
+      let second = Math.floor(this.duration - minute * 60);
+
+      minute = minute < 10 ? `0${minute}` : minute;
+      second = second < 10 ? `0${second}` : second;
+      return `${minute} : ${second}`;
     }
   },
   methods: {
@@ -208,36 +255,36 @@ export default {
       this.isPaused ? this.audioPlayer.play() : this.audioPlayer.pause();
       this.isPaused = this.audioPlayer.paused;
 
-      let map = [
-        "src",
-        "currentSrc",
-        "networkState",
-        "readyState",
-        "preload",
-        "buffered",
-        "played",
-        "seekable",
-        "seeking",
-        "currentTime",
-        "startTime",
-        "duration",
-        "paused",
-        "defaultPlaybackRate",
-        "playbackRate",
-        "ended",
-        "autoplay",
-        "loop",
-        "controls",
-        "volume",
-        "muted"
-      ];
-      setInterval(function() {
-        let str = "";
-        for (var i = 0, j = map.length; i < j; i++) {
-          str += map[i] + " : " + vm.audioPlayer[map[i]] + "<br>\n";
-        }
-        document.getElementById("panel").innerHTML = str;
-      }, 1000);
+      // let map = [
+      //   "src",
+      //   "currentSrc",
+      //   "networkState",
+      //   "readyState",
+      //   "preload",
+      //   "buffered",
+      //   "played",
+      //   "seekable",
+      //   "seeking",
+      //   "currentTime",
+      //   "startTime",
+      //   "duration",
+      //   "paused",
+      //   "defaultPlaybackRate",
+      //   "playbackRate",
+      //   "ended",
+      //   "autoplay",
+      //   "loop",
+      //   "controls",
+      //   "volume",
+      //   "muted"
+      // ];
+      // setInterval(function() {
+      //   let str = "";
+      //   for (var i = 0, j = map.length; i < j; i++) {
+      //     str += map[i] + " : " + vm.audioPlayer[map[i]] + "<br>\n";
+      //   }
+      //   document.getElementById("panel").innerHTML = str;
+      // }, 1000);
     },
     toPreSong() {
       //   console.log("index", this.songIndex);
