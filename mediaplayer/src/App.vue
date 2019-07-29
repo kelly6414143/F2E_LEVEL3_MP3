@@ -44,8 +44,9 @@ body {
   height: 100vh;
   overflow: hidden;
   #informationPanel {
+    background-color: #4b3434;
     display: flex;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 115px);
     overflow: hidden;
     #imageSize {
       align-self: center;

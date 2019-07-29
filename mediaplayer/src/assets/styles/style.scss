@@ -5,7 +5,7 @@
   }
 
 #controller{
-    background-color: #772020;
+    background:linear-gradient(to top, #361024,#772020);
     display: flex;
     flex-direction: column;
     height: 100px;
@@ -16,12 +16,13 @@
         display: flex;
         font-size: 12px;
         justify-content: space-between;
-        padding: 0 5px;
+        padding: 5px 15px 0;
     }
 
     #controller_downLayer{
         display: flex;
         justify-content: space-around;
+        padding: 0 65px 15px;
         #controller_left{
             align-items: center;
             color: #FFFFFF;
@@ -30,19 +31,28 @@
             width: 25%;
             #songImg{
                 margin: 0 10px;
+                min-width: 60px;
                 width: 60px;
                 img{
                     vertical-align: middle;
                     width: 100%;
+                    max-height: 65px;
                 }
             }
             #artistDate{
+                    width: 70%;
                 #artistDate_songName{
-                    font-size: 18px;
+                    font-size: 20px;
                     font-weight: bolder;
+                    overflow:hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
                 #artistDate_artist{
                     font-size: 14px;
+                    overflow:hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
         }
@@ -57,7 +67,8 @@
             }
             #playerButton{
                 margin: 0 20px;
-                width: 55px;
+                min-width: 50px;
+                width: 50px;
                 img{
                     height: 100%;
                     margin: 0;
@@ -73,6 +84,7 @@
             justify-content: center;
             width: 25%;
             #volumeButton{
+                cursor: pointer;
                 width: 20px;
                 margin: 1px 10px 0 0;
                 img{
@@ -82,6 +94,7 @@
             #volumeBar{
                 background-color: #FFFFFF;
                 border-radius: 30px;
+                cursor: pointer;
                 height: 5px;
                 width: 100px;
                 &-active{
@@ -97,11 +110,12 @@
 
 #musicRangeBox{
     background-color: #FFFFFF;
-    height: 20px;
+    cursor: pointer;
+    height: 15px;
     width: auto;
     &_range{
         background-color: #E5B4B7;
-        height: 20px;
+        height: 15px;
         width: 0px;
     }
 }
@@ -111,40 +125,101 @@
     background-color: #1A1A1A;
     color: #FFFFFF;
 
-    #audioList_table{
-        border-spacing: 0px;
-        text-align: center;
-        width: 100%;
-        #listTitle{
-            color:#964A4D;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+    #songListPanel{
+        align-items: flex-end;
+        display:flex;
+        height: 20vh;
+        padding: 65px 30px 46px;
+        #songPlaylist_img{
+            width: 20%;
+            #songPlaylist_img_size{
+                width: 100px;
+                img{
+                    width: 100%;
+                }       
+            }
         }
 
-        th,td{
-            border-bottom: .2px solid #707070;
+        #songPlaylist_info{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 17px;
+            #songPlaylist_info_date{
+                color:#707070;
+                font-size: 14px;
+            }
+            #songPlaylist_info_name{
+                font-weight: bolder;
+                font-size: 32px;
+                text-transform:capitalize;
+            }
+            #songPlaylist_info_playbutton{
+                button{
+                    background-color: #964A4D;
+                    border: 1px solid #964A4D;
+                    border-radius: 17px;
+                    color: #FFFFFF;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    padding: 6px 46px 4px;
+                }
+            }
         }
+    }
 
-        th{
-            padding: 4px 0;
+    
+    #songListTable{
+        height: calc(80vh - 230px);
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            width: 5px;
         }
-
-        td{
-            padding: 20px 0;
+        &::-webkit-scrollbar-track {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            // margin:80px 0 5px 0;
         }
-
-        & td:first-child{
-            padding-left: 10px;
+        &::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            background: #964A4D;
         }
-        & td:nth-child(2){
-            width: 10%;
-        }
-        & td:nth-child(3){
-            text-align: left;
-        }
-        & td:nth-child(5){
-            padding-right: 30px;
+        #audioList_table{
+            border-spacing: 0px;
+            text-align: center;
+            width: 100%;
+            #listTitle{
+                color:#964A4D;
+                font-size: 14px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+    
+            th,td{
+                border-bottom: .2px solid #707070;
+            }
+    
+            th{
+                padding: 4px 0;
+            }
+    
+            td{
+                padding: 20px 0;
+            }
+    
+            & td:first-child{
+                padding: 0 5px;
+            }
+            & td:nth-child(2){
+                width: 10%;
+            }
+            & td:nth-child(2),& td:nth-child(3), & th:nth-child(3){
+                text-align: left;
+            }
+            & td:nth-child(5){
+                padding-right: 30px;
+            }
         }
     }
 }

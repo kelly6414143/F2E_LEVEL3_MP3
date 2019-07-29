@@ -118,9 +118,6 @@ export default {
   },
   watch: {
     currentSong() {
-      //监听正在播放的歌曲改变\
-      //   console.log(this.audioPlayer);
-      //   console.log('watch',this.audioPlayer.duration); //此时duration为NaN
     },
     currentTime() {
       this.duration = this.audioPlayer.duration;
@@ -148,11 +145,7 @@ export default {
       // console.log(this.songSrc);
     },
     voiceVolume() {
-      // console.log("volume");
-      // console.log(this.voiceVolume);
-      let width = this.voiceVolume > 0 ? `${this.voiceVolume * 100}px` : 0;
-      // console.log(width);
-      document.getElementById("volumeBar-active").style.width = width;
+      this.getVolumeLength()
     }
   },
   computed: {
@@ -191,7 +184,7 @@ export default {
       return this.currentSonglist[this.songIndex].artist;
     },
     songImgSrc() {
-      this.$emit('changImage',this.currentSonglist[this.songIndex].songImgSrc)
+      this.$emit('changImage',this.currentSonglist[this.songIndex].artistImgSrc)
       return this.currentSonglist[this.songIndex].songImgSrc;
     },
     totalWidth() {
@@ -314,9 +307,15 @@ export default {
       this.isMute = !this.isMute;
       if (this.isMute) {
         this.audioPlayer.volume = 0;
+        document.getElementById("volumeBar-active").style.width = `0px`;
       } else {
         this.audioPlayer.volume = this.voiceVolume;
+        this.getVolumeLength()
       }
+    },
+    getVolumeLength(){
+      let width = this.voiceVolume > 0 ? `${this.voiceVolume * 100}px` : 0;
+      document.getElementById("volumeBar-active").style.width = width;
     },
     load() {
       // console.log("load");
