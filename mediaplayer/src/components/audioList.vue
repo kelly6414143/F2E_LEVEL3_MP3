@@ -8,7 +8,7 @@
             #songPlaylist_info_date 2019
             #songPlaylist_info_name love song
             #songPlaylist_info_playbutton
-              button play
+              button(@click="toPlaylist") play
           #likeIcon
             img(src="@/assets/images/emptyHeart.svg") 
         #songListTable
@@ -70,9 +70,9 @@ export default {
     //   return this.currentSongDetail
     // },
     currentSong() {
-      this.isChangeFromList = this.$store.state.isChangeFromList
+      console.log('audiolist currentsong')
+      this.isChangeFromList = this.$store.state.isChangeFromList;
       if (!this.isChangeFromList) {
-        // console.log(this.currentSongDetail);
         this.song = this.currentSongDetail;
       }
       return this.song;
@@ -80,10 +80,13 @@ export default {
   },
   methods: {
     changeSongFromList(songDetail) {
-      this.$store.commit('setIsChangeFromList',true)
+      this.$store.commit("setIsChangeFromList", true);
       // console.log("songdetail", songDetail);
       this.song = songDetail;
       this.$emit("getSongFromList", songDetail);
+    },
+    toPlaylist() {
+      this.$emit("toPlaylist", 'reset');
     }
   }
 };

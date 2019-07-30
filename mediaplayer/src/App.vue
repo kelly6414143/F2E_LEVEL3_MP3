@@ -7,11 +7,13 @@
       audio-list(
         id="audioList",
         :currentSongDetail="currentSongDetail",
-        @getSongFromList="getSongFromList"
+        @getSongFromList="getSongFromList",
+        @toPlaylist="toPlaylist"
       )
 
     audio-controller(
-      :currentAudioDetail = "currentAudioDetail"
+      ref="audioController",
+      :currentAudioDetail = "currentAudioDetail",
       @changImage="changImage",
       @getCurrentSongDetail="getCurrentSongDetail"
     )
@@ -30,20 +32,24 @@ export default {
   data() {
     return {
       mainImageSrc: "",
-      currentSongDetail:{},
-      currentAudioDetail:{}
+      resetAudio: false,
+      currentSongDetail: {},
+      currentAudioDetail: {}
     };
   },
   methods: {
     changImage(value) {
       this.mainImageSrc = value;
     },
-    getCurrentSongDetail(value){
-      this.currentSongDetail = value
+    getCurrentSongDetail(value) {
+      this.currentSongDetail = value;
     },
-    getSongFromList(value){
-      this.mainImageSrc = value.artistImgSrc
-      this.currentAudioDetail = value
+    getSongFromList(value) {
+      this.mainImageSrc = value.artistImgSrc;
+      this.currentAudioDetail = value;
+    },
+    toPlaylist(value) {
+      this.$refs.audioController.toPlaying(value);
     }
   }
 };

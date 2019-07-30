@@ -160,10 +160,16 @@
                     background-color: #964A4D;
                     border: 1px solid #964A4D;
                     border-radius: 17px;
+                    box-shadow: 0px 1px 8px 1px #a3a09b;
                     color: #FFFFFF;
+                    cursor: pointer;
                     font-size: 14px;
                     text-transform: uppercase;
+                    outline:none;
                     padding: 6px 46px 4px;
+                    &:active{
+                        box-shadow: 0px 1px 8px 3px #a3a09b;
+                    }
                 }
             }
         }

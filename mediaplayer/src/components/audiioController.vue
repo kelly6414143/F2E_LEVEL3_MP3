@@ -98,6 +98,7 @@ export default {
       isLoop: true,
       isResize: false,
       isMute: false,
+      isReset: false,
       audioPlayer: "",
       currentTime: 0,
       duration: 0,
@@ -166,6 +167,23 @@ export default {
       return songlist;
     },
     currentSong() {
+      console.log('computued')
+      let vm = this;
+      function changeSong(song) {
+        vm.audioPlayer.src = song;
+        vm.audioPlayer.currentTime = 0;
+        vm.currentTime = 0;
+        vm.audioPlayer.play();
+        vm.isPaused = vm.audioPlayer.paused;
+      }
+
+      if (this.isReset) {
+        let song = this.currentSonglist[this.songIndex].songSrc;
+        changeSong(song);
+        this.isReset = false
+        return song;
+      }
+
       if (this.$store.state.isChangeFromList) {
         this.$store.state.songList.filter((song, index) => {
           if (song.songName === this.currentAudioDetail.songName) {
@@ -173,20 +191,13 @@ export default {
           }
         });
         let song = this.currentAudioDetail.songSrc;
-        this.audioPlayer.src = song;
-        this.audioPlayer.currentTime = 0;
-        this.currentTime = 0;
-        this.audioPlayer.play();
-        this.isPaused = this.audioPlayer.paused;
+        changeSong(song);
         return song;
       }
+
       if (this.isChangeSong) {
         let song = this.currentSonglist[this.songIndex].songSrc;
-        this.audioPlayer.src = song;
-        this.audioPlayer.currentTime = 0;
-        this.currentTime = 0;
-        this.audioPlayer.play();
-        this.isPaused = this.audioPlayer.paused;
+        changeSong(song);
       } else {
         this.songSrc = this.currentSonglist[this.songIndex].songSrc;
       }
@@ -247,8 +258,14 @@ export default {
     updateTime(e) {
       this.currentTime = e.target.currentTime; //获取audio当前播放时间
     },
-    toPlaying() {
+    toPlaying(resetAudio) {
       let vm = this;
+      if (resetAudio === "reset") {
+        this.isReset = true;
+        this.songIndex = 0;
+        this.audioPlayer.play();
+        return;
+      }
       this.isPaused ? this.audioPlayer.play() : this.audioPlayer.pause();
       this.isPaused = this.audioPlayer.paused;
 
