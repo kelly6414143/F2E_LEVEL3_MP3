@@ -26,7 +26,7 @@ export default new Vuex.Store({
       },
       {
         artist: "曾之喬",
-        artistImgSrc: require("@/assets/images/portrait_JoanneTseng.jpeg"),
+        artistImgSrc: require("@/assets/images/portrait_JoanneTseng.jpg"),
         songName: "猜猜看",
         songSrc: require("@/assets/musics/guessIt.mp3"),
         songImgSrc: require("@/assets/images/JoanneTseng.jpg"),
@@ -59,7 +59,52 @@ export default new Vuex.Store({
         songImgSrc: require("@/assets/images/耿.jpg"),
         songLength: '04:30',
         status: 'pause'
-      }
+      },
+      {
+        artist: "林俊傑",
+        artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
+        songName: "黑夜問白天",
+        songSrc: require("@/assets/musics/53 Dawns.mp3"),
+        songImgSrc: require("@/assets/images/JJLin.jpg"),
+        songLength: '04:52',
+        status: 'pause'
+      },
+      {
+        artist: "林俊傑",
+        artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
+        songName: "身為風帆",
+        songSrc: require("@/assets/musics/Destiny.mp3"),
+        songImgSrc: require("@/assets/images/JJLin.jpg"),
+        songLength: '03:57',
+        status: 'pause'
+      },
+      {
+        artist: "林俊傑",
+        artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
+        songName: "偉大的渺小",
+        songSrc: require("@/assets/musics/Little Big Us.mp3"),
+        songImgSrc: require("@/assets/images/JJLin.jpg"),
+        songLength: '04:37',
+        status: 'pause'
+      },
+      {
+        artist: "林俊傑",
+        artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
+        songName: "小瓶子",
+        songSrc: require("@/assets/musics/Message In A Bottle.mp3"),
+        songImgSrc: require("@/assets/images/JJLin.jpg"),
+        songLength: '04:12',
+        status: 'pause'
+      },
+      {
+        artist: "林俊傑",
+        artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
+        songName: "剪雲者",
+        songSrc: require("@/assets/musics/Paper Clouds.mp3"),
+        songImgSrc: require("@/assets/images/JJLin.jpg"),
+        songLength: '03:35',
+        status: 'pause'
+      },
     ],
     currentSongDetail: {
       artist: "林俊傑",
