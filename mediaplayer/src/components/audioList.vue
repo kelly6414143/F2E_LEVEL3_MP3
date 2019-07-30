@@ -46,7 +46,8 @@ export default {
       currentPlaylistImg: "",
       songlist: this.$store.state.songList,
       song: "",
-      isChangeFromList: false
+      isChangeFromList: false,
+      resetAudio: false
       // currentSong: this.$store.state.currentSongDetail
     };
   },
@@ -70,11 +71,17 @@ export default {
     //   return this.currentSongDetail
     // },
     currentSong() {
-      console.log('audiolist currentsong')
+      console.log(this.resetAudio, this.$store.state.isChangeFromList)
       this.isChangeFromList = this.$store.state.isChangeFromList;
-      if (!this.isChangeFromList) {
-        this.song = this.currentSongDetail;
+      if (this.resetAudio) {
+        this.song = this.$store.state.songList[0];
+      } else {
+        if (!this.isChangeFromList) {
+          this.song = this.currentSongDetail;
+        }
       }
+      console.log(this.song)
+      this.resetAudio = false
       return this.song;
     }
   },
@@ -86,7 +93,9 @@ export default {
       this.$emit("getSongFromList", songDetail);
     },
     toPlaylist() {
-      this.$emit("toPlaylist", 'reset');
+      this.$store.commit("setIsChangeFromList", true);
+      this.resetAudio = true;
+      this.$emit("toPlaylist", "reset");
     }
   }
 };

@@ -3,7 +3,8 @@
     #informationPanel
       #imageSize
         img(
-          :src="mainImageSrc",)
+          :src="mainImageSrc",
+          )
       audio-list(
         id="audioList",
         :currentSongDetail="currentSongDetail",
@@ -32,7 +33,7 @@ export default {
   data() {
     return {
       mainImageSrc: "",
-      resetAudio: false,
+      // resetAudio: false,
       currentSongDetail: {},
       currentAudioDetail: {}
     };
@@ -49,6 +50,7 @@ export default {
       this.currentAudioDetail = value;
     },
     toPlaylist(value) {
+      this.mainImageSrc = this.$store.state.songList[0].artistImgSrc
       this.$refs.audioController.toPlaying(value);
     }
   }

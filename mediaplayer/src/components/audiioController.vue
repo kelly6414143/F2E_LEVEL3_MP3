@@ -205,6 +205,7 @@ export default {
         "getCurrentSong",
         this.currentSonglist[this.songIndex]
       );
+      this.isChangeSong = false
       this.$emit("getCurrentSongDetail", this.currentSonglist[this.songIndex]);
       return this.songSrc;
     },
@@ -301,6 +302,7 @@ export default {
       // }, 1000);
     },
     toPreSong() {
+      this.$store.commit("setIsChangeFromList", false);
       //   console.log("index", this.songIndex);
       if (this.songIndex === 0) {
         this.isChangeSong = false;
