@@ -85,6 +85,9 @@
 
 <script>
 export default {
+  props: {
+    currentAudioDetail: Object
+  },
   data() {
     return {
       origSonglist: [],
@@ -117,8 +120,7 @@ export default {
     };
   },
   watch: {
-    currentSong() {
-    },
+    currentSong() {},
     currentTime() {
       this.duration = this.audioPlayer.duration;
       //   this.audioPlayer.currentTime = this.currentTime;
@@ -145,12 +147,12 @@ export default {
       // console.log(this.songSrc);
     },
     voiceVolume() {
-      this.getVolumeLength()
+      this.getVolumeLength();
     }
   },
   computed: {
     currentSonglist() {
-      this.origSonglist = this.$store.state.songList
+      this.origSonglist = this.$store.state.songList;
       // console.log('currentSongList')
       let songlist;
       if (this.isShuffle) {
@@ -164,6 +166,20 @@ export default {
       return songlist;
     },
     currentSong() {
+      if (this.$store.state.isChangeFromList) {
+        this.$store.state.songList.filter((song, index) => {
+          if (song.songName === this.currentAudioDetail.songName) {
+            this.songIndex = index;
+          }
+        });
+        let song = this.currentAudioDetail.songSrc;
+        this.audioPlayer.src = song;
+        this.audioPlayer.currentTime = 0;
+        this.currentTime = 0;
+        this.audioPlayer.play();
+        this.isPaused = this.audioPlayer.paused;
+        return song;
+      }
       if (this.isChangeSong) {
         let song = this.currentSonglist[this.songIndex].songSrc;
         this.audioPlayer.src = song;
@@ -174,7 +190,11 @@ export default {
       } else {
         this.songSrc = this.currentSonglist[this.songIndex].songSrc;
       }
-      this.$store.commit('getCurrentSong',this.currentSonglist[this.songIndex])
+      this.$store.commit(
+        "getCurrentSong",
+        this.currentSonglist[this.songIndex]
+      );
+      this.$emit("getCurrentSongDetail", this.currentSonglist[this.songIndex]);
       return this.songSrc;
     },
     songName() {
@@ -184,7 +204,10 @@ export default {
       return this.currentSonglist[this.songIndex].artist;
     },
     songImgSrc() {
-      this.$emit('changImage',this.currentSonglist[this.songIndex].artistImgSrc)
+      this.$emit(
+        "changImage",
+        this.currentSonglist[this.songIndex].artistImgSrc
+      );
       return this.currentSonglist[this.songIndex].songImgSrc;
     },
     totalWidth() {
@@ -205,7 +228,9 @@ export default {
       return `${minute} : ${second}`;
     },
     totalTimer() {
-      if(isNaN(this.duration)){return `00 : 00`}
+      if (isNaN(this.duration)) {
+        return `00 : 00`;
+      }
       let minute = Math.floor(this.duration / 60);
       let second = Math.floor(this.duration - minute * 60);
 
@@ -268,6 +293,7 @@ export default {
       this.songIndex--;
     },
     toNexSong() {
+      this.$store.commit("setIsChangeFromList", false);
       if (this.currentSonglist.length - 1 === this.songIndex) {
         this.isChangeSong = false;
         return;
@@ -310,10 +336,10 @@ export default {
         document.getElementById("volumeBar-active").style.width = `0px`;
       } else {
         this.audioPlayer.volume = this.voiceVolume;
-        this.getVolumeLength()
+        this.getVolumeLength();
       }
     },
-    getVolumeLength(){
+    getVolumeLength() {
       let width = this.voiceVolume > 0 ? `${this.voiceVolume * 100}px` : 0;
       document.getElementById("volumeBar-active").style.width = width;
     },

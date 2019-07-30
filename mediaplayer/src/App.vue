@@ -2,10 +2,19 @@
   #app
     #informationPanel
       #imageSize
-        img(:src="mainImageSrc")
-      audio-list(id="audioList")
+        img(
+          :src="mainImageSrc",)
+      audio-list(
+        id="audioList",
+        :currentSongDetail="currentSongDetail",
+        @getSongFromList="getSongFromList"
+      )
 
-    audio-controller(@changImage="changImage")
+    audio-controller(
+      :currentAudioDetail = "currentAudioDetail"
+      @changImage="changImage",
+      @getCurrentSongDetail="getCurrentSongDetail"
+    )
 </template>
 
 <script>
@@ -20,12 +29,21 @@ export default {
   },
   data() {
     return {
-      mainImageSrc: ""
+      mainImageSrc: "",
+      currentSongDetail:{},
+      currentAudioDetail:{}
     };
   },
   methods: {
     changImage(value) {
       this.mainImageSrc = value;
+    },
+    getCurrentSongDetail(value){
+      this.currentSongDetail = value
+    },
+    getSongFromList(value){
+      this.mainImageSrc = value.artistImgSrc
+      this.currentAudioDetail = value
     }
   }
 };

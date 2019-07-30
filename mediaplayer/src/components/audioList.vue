@@ -1,7 +1,6 @@
 <template lang="pug">
     #audioList
-
-        #songListPanel
+        #songListPanel  
           #songPlaylist_img
             #songPlaylist_img_size
               img(:src="currentPlaylistImg")
@@ -11,7 +10,7 @@
             #songPlaylist_info_playbutton
               button play
           #likeIcon
-            img(src="@/assets/images/emptyHeart.svg")
+            img(src="@/assets/images/emptyHeart.svg") 
         #songListTable
           table(id="audioList_table")
               tr(id="listTitle")
@@ -22,7 +21,8 @@
                   th
               tr(
                   v-for="(songDetail,index) in songlist",
-                  :key="index"
+                  :key="index",
+                  @click="changeSongFromList(songDetail)"
               )
                   td  
                       img(
@@ -32,22 +32,30 @@
                   td {{songDetail.songName}}
                   td {{songDetail.songLength}}
                   td 
-                      img(src="@/assets/images/emptyHeart.svg")
+                      img(src="@/assets/images/emptyHeart.svg")  
 
 </template>
 
 <script>
 export default {
+  props: {
+    currentSongDetail: Object
+  },
   data() {
     return {
-      currentPlaylistImg:''
+      currentPlaylistImg: "",
+      songlist: this.$store.state.songList,
+      song: "",
+      isChangeFromList: false
+      // currentSong: this.$store.state.currentSongDetail
     };
   },
   watch: {
     currentSong() {
       this.songlist.map(song => {
         if (song.songName === this.currentSong.songName) {
-          this.currentPlaylistImg = song.songImgSrc
+          this.currentPlaylistImg = song.songImgSrc;
+          // console.log(this.currentPlaylistImg);
           song.status = "playing";
           return song;
         } else {
@@ -58,14 +66,26 @@ export default {
     }
   },
   computed: {
-    songlist() {
-      return this.$store.state.songList;
-    },
+    // songlist() {
+    //   return this.currentSongDetail
+    // },
     currentSong() {
-      return this.$store.state.currentSongDetail;
+      this.isChangeFromList = this.$store.state.isChangeFromList
+      if (!this.isChangeFromList) {
+        // console.log(this.currentSongDetail);
+        this.song = this.currentSongDetail;
+      }
+      return this.song;
     }
   },
-  methods: {}
+  methods: {
+    changeSongFromList(songDetail) {
+      this.$store.commit('setIsChangeFromList',true)
+      // console.log("songdetail", songDetail);
+      this.song = songDetail;
+      this.$emit("getSongFromList", songDetail);
+    }
+  }
 };
 </script>
 

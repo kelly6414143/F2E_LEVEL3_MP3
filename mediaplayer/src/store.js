@@ -5,14 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    songList:[
+    songList: [
       {
         artist: "林俊傑",
         artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
         songName: "Until The Day",
         songSrc: require("@/assets/musics/untilTheDay.mp3"),
         songImgSrc: require("@/assets/images/JJLin.jpg"),
-        songLength:'04:35',
+        songLength: '04:35',
         status: 'pause'
       },
       {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
         songName: "他不懂",
         songSrc: require("@/assets/musics/heUnderstood.mp3"),
         songImgSrc: require("@/assets/images/JasonChang.jpg"),
-        songLength:'03:52',
+        songLength: '03:52',
         status: 'pause'
       },
       {
@@ -30,7 +30,7 @@ export default new Vuex.Store({
         songName: "猜猜看",
         songSrc: require("@/assets/musics/guessIt.mp3"),
         songImgSrc: require("@/assets/images/JoanneTseng.jpg"),
-        songLength:'04:14',
+        songLength: '04:14',
         status: 'pause'
       },
       {
@@ -39,7 +39,7 @@ export default new Vuex.Store({
         songName: "When You Tell Me That You Love Me",
         songSrc: require("@/assets/musics/When You Tell Me That You Love Me.mp3"),
         songImgSrc: require("@/assets/images/Westlife .feat DianaRoss.jpg"),
-        songLength:'04:00',
+        songLength: '04:00',
         status: 'pause'
       },
       {
@@ -48,7 +48,7 @@ export default new Vuex.Store({
         songName: "不要再孤單",
         songSrc: require("@/assets/musics/no lonely again.mp3"),
         songImgSrc: require("@/assets/images/no lonely again.jpg"),
-        songLength:'03:39',
+        songLength: '03:39',
         status: 'pause'
       },
       {
@@ -57,15 +57,27 @@ export default new Vuex.Store({
         songName: "耿",
         songSrc: require("@/assets/musics/耿.mp3"),
         songImgSrc: require("@/assets/images/耿.jpg"),
-        songLength:'04:30',
+        songLength: '04:30',
         status: 'pause'
       }
     ],
-    currentSongDetail:''
+    currentSongDetail: {
+      artist: "林俊傑",
+      artistImgSrc: require("@/assets/images/portrait_JJLin.jpg"),
+      songName: "Until The Day",
+      songSrc: require("@/assets/musics/untilTheDay.mp3"),
+      songImgSrc: require("@/assets/images/JJLin.jpg"),
+      songLength: '04:35',
+      status: 'pause'
+    },
+    isChangeFromList:false
   },
   mutations: {
-    getCurrentSong(state,param){
+    getCurrentSong(state, param) {
       state.currentSongDetail = param
+    },
+    setIsChangeFromList(state,param){
+      state.isChangeFromList = param
     }
   },
   actions: {
