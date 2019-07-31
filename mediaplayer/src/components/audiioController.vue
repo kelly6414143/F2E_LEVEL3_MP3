@@ -270,7 +270,7 @@ export default {
         this.songIndex = 0;
         this.audioPlayer.play();
         return;
-      } else {
+      } else if(resetAudio==='chosen'){
         this.isReset = false;
         return;
       }
