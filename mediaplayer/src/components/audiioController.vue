@@ -155,15 +155,20 @@ export default {
     currentSonglist() {
       this.origSonglist = this.$store.state.songList;
       // console.log('currentSongList')
+      // console.log(this.isShuffle)
       let songlist;
       if (this.isShuffle) {
-        // console.log("shuffle");
-        songlist = this.shufflecurrentSonglist;
+        if (this.isReset) {
+          songlist = this.origSonglist;
+          this.isShuffle = false
+        } else {
+          songlist = this.shufflecurrentSonglist;
+        }
         this.songIndex = 0;
       } else {
         songlist = this.origSonglist;
       }
-
+      // console.log(songlist)
       return songlist;
     },
     currentSong() {
@@ -179,6 +184,7 @@ export default {
 
       if (this.$store.state.isChangeFromList) {
         if (this.isReset) {
+          // console.log(this.currentSonglist[this.songIndex].songSrc)
           let song = this.currentSonglist[this.songIndex].songSrc;
           changeSong(song);
           return song;
@@ -264,9 +270,9 @@ export default {
         this.songIndex = 0;
         this.audioPlayer.play();
         return;
-      }else{
+      } else {
         this.isReset = false;
-        return
+        return;
       }
       this.isPaused ? this.audioPlayer.play() : this.audioPlayer.pause();
       this.isPaused = this.audioPlayer.paused;
@@ -322,6 +328,8 @@ export default {
       this.songIndex++;
     },
     toShuffleSonglist() {
+      this.$store.commit("setIsChangeFromList", false);
+      this.isReset = false;
       this.isShuffle = !this.isShuffle;
       if (this.isShuffle) {
         let songlist = JSON.parse(JSON.stringify(this.origSonglist));

@@ -115,6 +115,7 @@ export default new Vuex.Store({
       songLength: '04:35',
       status: 'pause'
     },
+    shuffleSonglist:[],
     isChangeFromList:false
   },
   mutations: {
@@ -123,6 +124,9 @@ export default new Vuex.Store({
     },
     setIsChangeFromList(state,param){
       state.isChangeFromList = param
+    },
+    changeSonglist(state,param){
+      state.shuffleSonglist = param
     }
   },
   actions: {
