@@ -23,6 +23,7 @@
 <script>
 import audioController from "./components/audiioController";
 import audioList from "./components/audioList";
+import { setTimeout } from "timers";
 
 export default {
   name: "app",
@@ -40,18 +41,47 @@ export default {
   },
   methods: {
     changImage(value) {
-      this.mainImageSrc = value;
+    if( this.isGetSonglist){
+      return
+    }
+      if (document.getElementById("imageSize")) {
+        document.getElementById("imageSize").classList.add("transition-left");
+        setTimeout(() => {
+          this.mainImageSrc = value;
+          document
+            .getElementById("imageSize")
+            .classList.remove("transition-left");
+        }, 1000);
+      } else {
+        this.mainImageSrc = value;
+      }
     },
     getCurrentSongDetail(value) {
+      this.isGetSonglist = false
       this.currentSongDetail = value;
     },
     getSongFromList(value) {
-      this.mainImageSrc = value.artistImgSrc;
-      this.currentAudioDetail = value;
+      this.isGetSonglist = true
+      // document.getElementById('imageSize').style.transition = `2s`
+      document.getElementById("imageSize").classList.add("transition-left");
+      setTimeout(() => {
+        this.mainImageSrc = value.artistImgSrc;
+        this.currentAudioDetail = value;
+        document
+          .getElementById("imageSize")
+          .classList.remove("transition-left");
+      }, 1000);
       this.$refs.audioController.toPlaying("chosen");
     },
     toPlaylist(value) {
-      this.mainImageSrc = this.$store.state.songList[0].artistImgSrc;
+      document.getElementById("imageSize").classList.add("transition-left");
+      setTimeout(() => {
+        this.mainImageSrc = this.$store.state.songList[0].artistImgSrc;
+        document
+          .getElementById("imageSize")
+          .classList.remove("transition-left");
+      }, 1000);
+
       this.$refs.audioController.toPlaying(value);
     }
   }
@@ -79,10 +109,17 @@ body {
     #imageSize {
       align-self: center;
       width: 40%;
+      transition: 5s;
+      transform-style: preserve-3d;
+      transform-origin: top left;
+      // transform: rotateY(0deg);
       img {
         width: 100%;
         vertical-align: bottom;
       }
+    }
+    .transition-left {
+      transform: rotateY(360deg);
     }
     #audioList {
       width: 60%;
