@@ -48,6 +48,7 @@ export default {
     getSongFromList(value) {
       this.mainImageSrc = value.artistImgSrc;
       this.currentAudioDetail = value;
+      this.$refs.audioController.toPlaying('chosen');
     },
     toPlaylist(value) {
       this.mainImageSrc = this.$store.state.songList[0].artistImgSrc

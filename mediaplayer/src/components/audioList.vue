@@ -71,7 +71,7 @@ export default {
     //   return this.currentSongDetail
     // },
     currentSong() {
-      console.log(this.resetAudio, this.$store.state.isChangeFromList)
+      // console.log(this.resetAudio, this.$store.state.isChangeFromList)
       this.isChangeFromList = this.$store.state.isChangeFromList;
       if (this.resetAudio) {
         this.song = this.$store.state.songList[0];
@@ -80,7 +80,7 @@ export default {
           this.song = this.currentSongDetail;
         }
       }
-      console.log(this.song)
+      // console.log(this.song)
       this.resetAudio = false
       return this.song;
     }

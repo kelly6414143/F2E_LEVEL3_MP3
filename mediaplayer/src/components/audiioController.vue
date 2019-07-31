@@ -167,7 +167,7 @@ export default {
       return songlist;
     },
     currentSong() {
-      console.log('computued')
+      // console.log("computued",this.isReset);
       let vm = this;
       function changeSong(song) {
         vm.audioPlayer.src = song;
@@ -177,14 +177,12 @@ export default {
         vm.isPaused = vm.audioPlayer.paused;
       }
 
-      if (this.isReset) {
-        let song = this.currentSonglist[this.songIndex].songSrc;
-        changeSong(song);
-        this.isReset = false
-        return song;
-      }
-
       if (this.$store.state.isChangeFromList) {
+        if (this.isReset) {
+          let song = this.currentSonglist[this.songIndex].songSrc;
+          changeSong(song);
+          return song;
+        }
         this.$store.state.songList.filter((song, index) => {
           if (song.songName === this.currentAudioDetail.songName) {
             this.songIndex = index;
@@ -205,7 +203,7 @@ export default {
         "getCurrentSong",
         this.currentSonglist[this.songIndex]
       );
-      this.isChangeSong = false
+      this.isChangeSong = false;
       this.$emit("getCurrentSongDetail", this.currentSonglist[this.songIndex]);
       return this.songSrc;
     },
@@ -266,6 +264,9 @@ export default {
         this.songIndex = 0;
         this.audioPlayer.play();
         return;
+      }else{
+        this.isReset = false;
+        return
       }
       this.isPaused ? this.audioPlayer.play() : this.audioPlayer.pause();
       this.isPaused = this.audioPlayer.paused;
@@ -327,7 +328,6 @@ export default {
         let store = [];
         for (let x = 0, maxLength = songlist.length; x < maxLength; x++) {
           let index = Math.floor(Math.random() * maxLength);
-          //   console.log(index);
           for (let y = 0; y < maxLength; y++) {
             store[index] = songlist[index];
             songlist[index] = songlist[y];
