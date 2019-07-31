@@ -48,10 +48,10 @@ export default {
     getSongFromList(value) {
       this.mainImageSrc = value.artistImgSrc;
       this.currentAudioDetail = value;
-      this.$refs.audioController.toPlaying('chosen');
+      this.$refs.audioController.toPlaying("chosen");
     },
     toPlaylist(value) {
-      this.mainImageSrc = this.$store.state.songList[0].artistImgSrc
+      this.mainImageSrc = this.$store.state.songList[0].artistImgSrc;
       this.$refs.audioController.toPlaying(value);
     }
   }
@@ -70,6 +70,7 @@ body {
 #app {
   height: 100vh;
   overflow: hidden;
+  position: relative;
   #informationPanel {
     background-color: #4b3434;
     display: flex;

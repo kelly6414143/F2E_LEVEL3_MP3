@@ -5,7 +5,10 @@
             #songPlaylist_img_size
               img(:src="currentPlaylistImg")
           #songPlaylist_info
-            #songPlaylist_info_date 2019
+            #leave-outter
+              #top-leaves
+              #bottom-leaves
+            #songPlaylist_info_date 2019(作業練習用，無商業價值)
             #songPlaylist_info_name love song
             #songPlaylist_info_playbutton
               button(@click="toPlaylist") play
